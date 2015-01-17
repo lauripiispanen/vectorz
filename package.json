@@ -1,0 +1,14 @@
+{
+  "name": "vectorz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "vectorz.js",
+  "scripts": {
+    "test": "node_modules/mocha/bin/mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^2.1.0"
+  }
+}
