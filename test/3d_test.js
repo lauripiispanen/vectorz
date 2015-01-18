@@ -43,6 +43,15 @@ describe('Vector3', function() {
         var vec2 = new Vector3(4, 4, 2);
         assert.equal(48, Math.round(vec1.angleDeg(vec2)));
     });
+    it('distance', function() {
+        var vec1 = new Vector3(0, 1, 2);
+        var vec2 = new Vector3(3, 1, 2);
+        assert.equal(3, vec1.distance(vec2));
+    });
+    it('limit', function() {
+        var vec1 = new Vector3(0, 0, 3);
+        assert.deepEqual(Vector3(0, 0, 1.5), vec1.limit(1.5));
+    });
     it('constructor', function() {
         assert(Vector3(2, 2, 1).equals(new Vector3(2, 2, 1)));
         assert(!Vector3(2, 3, 1).equals(new Vector3(4, 5, 1)));

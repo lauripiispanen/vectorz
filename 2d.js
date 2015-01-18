@@ -23,8 +23,7 @@ Vector2D.prototype.magnitude = function() {
     return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
 };
 Vector2D.prototype.normalize = function() {
-    var magnitude = this.magnitude();
-    return new Vector2D(this.x / magnitude, this.y / magnitude);
+    return this.limit(1);
 };
 Vector2D.prototype.dot = function(other) {
     return this.x * other.x + this.y * other.y;
@@ -33,7 +32,14 @@ Vector2D.prototype.angle = function(other) {
     return Math.acos(this.normalize().dot(other.normalize()));
 };
 Vector2D.prototype.angleDeg = function(other) {
-     return this.angle(other) * (180 / Math.PI);
+    return this.angle(other) * (180 / Math.PI);
+};
+Vector2D.prototype.distance = function(other) {
+    return this.sub(other).magnitude();
+};
+Vector2D.prototype.limit = function(magnitude) {
+    var ratio = (this.magnitude() / magnitude);
+    return new Vector2D(this.x / ratio, this.y / ratio);
 };
 Vector2D.prototype.toArray = function() {
     return [this.x, this.y];
