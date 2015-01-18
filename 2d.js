@@ -47,7 +47,7 @@ Vector2D.prototype.toObject = function() {
 
 Vector2D.prototype.equals = function(other) {
     return this.x === other.x && this.y === other.y;
-}
+};
 Vector2D.fromArray = function(arr) {
     return new Vector2D(arr[0], arr[1]);
 };
