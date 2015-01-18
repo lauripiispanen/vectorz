@@ -24,7 +24,7 @@ Vector3D.prototype.magnitude = function() {
     return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2) + Math.pow(this.z, 2));
 };
 Vector3D.prototype.normalize = function() {
-    return this.limit(1);
+    return this.clamp(1);
 };
 Vector3D.prototype.dot = function(other) {
     return this.x * other.x + this.y * other.y + this.z * other.z;
@@ -38,9 +38,16 @@ Vector3D.prototype.angleDeg = function(other) {
 Vector3D.prototype.distance = function(other) {
      return this.sub(other).magnitude();
 };
-Vector3D.prototype.limit = function(magnitude) {
+Vector3D.prototype.clamp = function(magnitude) {
     var ratio = (this.magnitude() / magnitude);
     return new Vector3D(this.x / ratio, this.y / ratio, this.z / ratio);
+};
+Vector3D.prototype.limit = function(magnitude) {
+    if (magnitude < this.magnitude()) {
+        return this.clamp(magnitude);
+    } else {
+        return this;
+    }
 };
 
 Vector3D.prototype.equals = function(other) {

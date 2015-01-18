@@ -35,8 +35,8 @@ describe('Vector2', function() {
         assert.equal(36, vec1.dot(vec2));
     });
     it('normalize', function() {
-        var vec1 = Vector2(4, 8);
-        assert.deepEqual(vec1.normalize(), Vector2(1, 2).normalize());
+        assert.deepEqual(Vector2(4, 8).normalize(), Vector2(1, 2).normalize());
+        assert.deepEqual(Vector2(0.1, 0.2).normalize(), Vector2(1, 2).normalize());
     });
     it('angleDeg', function() {
         var vec1 = new Vector2(0, 1);
@@ -48,9 +48,13 @@ describe('Vector2', function() {
         var vec2 = new Vector2(3, 1);
         assert.equal(3, vec1.distance(vec2));
     });
-    it('limit', function() {
+    it('clamp', function() {
         var vec1 = new Vector2(0, 3);
-        assert.deepEqual(Vector2(0, 1.5), vec1.limit(1.5));
+        assert.deepEqual(Vector2(0, 4.5), vec1.clamp(4.5));
+    });
+    it('limit', function() {
+        assert.deepEqual(Vector2(0, 1.5), Vector2(0, 3).limit(1.5));
+        assert.deepEqual(Vector2(0, 1), Vector2(0, 1).limit(1.5));
     });
     it('constructor', function() {
         assert(Vector2(2, 2).equals(new Vector2(2, 2)));
