@@ -65,9 +65,16 @@ Vector3D.toObject = function(self) {
     };
 };
 
-Object.keys(Vector3D).forEach(function(key) {
+var keys = Object.keys(Vector3D);
+Vector3D.comp = {};
+keys.forEach(function(key) {
     Vector3D.prototype[key] = function(other) {
         return Vector3D[key](this, other);
+    };
+    Vector3D.comp[key] = function(other) {
+        return function(self) {
+            return self[key](other);
+        };
     };
 });
 

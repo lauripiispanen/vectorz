@@ -1,7 +1,8 @@
 var assert  = require('assert'),
     Vector3 = require('../3d'),
     instances = [],
-    standalones = [];
+    standalones = [],
+    composables = [];
 
 function test(name, assert, expected, param1, param2) {
     instances.push(function() {
@@ -12,6 +13,11 @@ function test(name, assert, expected, param1, param2) {
     standalones.push(function() {
         it(name, function() {
             assert(Vector3[name](param1, param2), expected);
+        });
+    });
+    composables.push(function() {
+        it(name, function() {
+            assert(Vector3.comp[name](param2)(param1), expected);
         });
     });
 }
@@ -70,6 +76,32 @@ describe('Vector3', function() {
             assert(Vector3(1,0,0).equals(Vector3.right));
             assert(Vector3(1,1,1).equals(Vector3.one));
             assert(Vector3(0,0,0).equals(Vector3.zero));
+        });
+    });
+
+    describe('composable instance functions', function() {
+        composables.forEach(function(it) {
+            it.call();
+        });
+
+        var vec = [
+            Vector3(1, 1, 1),
+            Vector3(1, 2, 3),
+            Vector3(3, 1, 3),
+        ];
+
+        it('verify composability - multiply', function() {
+            var res = vec.map(Vector3.comp.multiply(Vector3(3, 3, 3)));
+
+            assert.deepEqual([
+                Vector3(3, 3, 3),
+                Vector3(3, 6, 9),
+                Vector3(9, 3, 9)
+            ], res);
+        });
+        it('verify composability - magnitude', function() {
+            var res = vec.map(Vector3.comp.magnitude()).map(Math.round).reduce(function(a, b) { return a + b; });
+            assert.deepEqual(10, res);
         });
     });
 
