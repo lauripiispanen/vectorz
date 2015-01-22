@@ -12,7 +12,7 @@ function test(name, assert, expected, param1, param2) {
     standalones.push(function() {
         it(name, function() {
             assert(Vector3[name](param1, param2), expected);
-        });        
+        });
     });
 }
 

@@ -8,108 +8,68 @@ function Vector3D(x, y, z) {
     }
 }
 
-Vector3D.prototype.add = function(other) {
-    return new Vector3D(this.x + other.x, this.y + other.y, this.z + other.z);
+Vector3D.add = function(self, other) {
+    return new Vector3D(self.x + other.x, self.y + other.y, self.z + other.z);
 };
-Vector3D.add = function(a, b) {
-    return a.add(b);
-};
-Vector3D.prototype.sub = function(other) {
-    return new Vector3D(this.x - other.x, this.y - other.y, this.z - other.z);
-};
-Vector3D.sub = function(a, b) {
-    return a.sub(b);
-};
-Vector3D.prototype.multiply = function(other) {
-    return new Vector3D(this.x * other.x, this.y * other.y, this.z * other.z);
+Vector3D.sub = function(self, other) {
+    return new Vector3D(self.x - other.x, self.y - other.y, self.z - other.z);
 };
 Vector3D.multiply = function(self, other) {
-    return self.multiply(other);
-};
-Vector3D.prototype.divide = function(other) {
-    return new Vector3D(this.x / other.x, this.y / other.y, this.z / other.z);
+    return new Vector3D(self.x * other.x, self.y * other.y, self.z * other.z);
 };
 Vector3D.divide = function(self, other) {
-    return self.divide(other);
-};
-Vector3D.prototype.magnitude = function() {
-    return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2) + Math.pow(this.z, 2));
+    return new Vector3D(self.x / other.x, self.y / other.y, self.z / other.z);
 };
 Vector3D.magnitude = function(self) {
-    return self.magnitude();
-};
-Vector3D.prototype.normalize = function() {
-    return this.clamp(1);
+    return Math.sqrt(Math.pow(self.x, 2) + Math.pow(self.y, 2) + Math.pow(self.z, 2));
 };
 Vector3D.normalize = function(self) {
-    return self.normalize();
-};
-Vector3D.prototype.dot = function(other) {
-    return this.x * other.x + this.y * other.y + this.z * other.z;
+    return self.clamp(1);
 };
 Vector3D.dot = function(self, other) {
-    return self.dot(other);
-};
-Vector3D.prototype.angle = function(other) {
-    return Math.acos(this.normalize().dot(other.normalize()));
+    return self.x * other.x + self.y * other.y + self.z * other.z;
 };
 Vector3D.angle = function(self, other) {
-    return self.angle(other);
-};
-Vector3D.prototype.angleDeg = function(other) {
-     return this.angle(other) * (180 / Math.PI);
+    return Math.acos(self.normalize().dot(other.normalize()));
 };
 Vector3D.angleDeg = function(self, other) {
-     return self.angleDeg(other);
-};
-Vector3D.prototype.distance = function(other) {
-     return this.sub(other).magnitude();
+     return self.angle(other) * (180 / Math.PI);
 };
 Vector3D.distance = function(self, other) {
-     return self.distance(other);
-};
-Vector3D.prototype.clamp = function(magnitude) {
-    var ratio = (this.magnitude() / magnitude);
-    return new Vector3D(this.x / ratio, this.y / ratio, this.z / ratio);
+     return self.sub(other).magnitude();
 };
 Vector3D.clamp = function(self, magnitude) {
-     return self.clamp(magnitude);
-};
-Vector3D.prototype.limit = function(magnitude) {
-    if (magnitude < this.magnitude()) {
-        return this.clamp(magnitude);
-    } else {
-        return this;
-    }
+    var ratio = (self.magnitude() / magnitude);
+    return new Vector3D(self.x / ratio, self.y / ratio, self.z / ratio);
 };
 Vector3D.limit = function(self, magnitude) {
-     return self.limit(magnitude);
+    if (magnitude < self.magnitude()) {
+        return self.clamp(magnitude);
+    } else {
+        return self;
+    }
 };
 
-Vector3D.prototype.equals = function(other) {
-    return this.x === other.x && this.y === other.y && this.z === other.z;
-};
 Vector3D.equals = function(self, other) {
-    return self.equals(other);
+    return self.x === other.x && self.y === other.y && self.z === other.z;
 };
 
-Vector3D.prototype.toArray = function() {
-    return [this.x, this.y, this.z];
-};
 Vector3D.toArray = function(self) {
-    return self.toArray();
-};
-Vector3D.prototype.toObject = function() {
-    return {
-        x: this.x,
-        y: this.y,
-        z: this.z
-    };
+    return [self.x, self.y, self.z];
 };
 Vector3D.toObject = function(self) {
-    return self.toObject();
+    return {
+        x: self.x,
+        y: self.y,
+        z: self.z
+    };
 };
 
+Object.keys(Vector3D).forEach(function(key) {
+    Vector3D.prototype[key] = function(other) {
+        return Vector3D[key](this, other);
+    };
+});
 
 Vector3D.fromArray = function(arr) {
     return new Vector3D(arr[0], arr[1], arr[2]);
