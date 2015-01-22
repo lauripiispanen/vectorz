@@ -1,55 +1,33 @@
 var assert  = require('assert'),
     Vector3 = require('../3d'),
-    instances = [],
-    standalones = [],
-    composables = [];
-
-function test(name, assert, expected, param1, param2) {
-    instances.push(function() {
-        it(name, function() {
-            assert(param1[name](param2), expected);
-        });
-    });
-    standalones.push(function() {
-        it(name, function() {
-            assert(Vector3[name](param1, param2), expected);
-        });
-    });
-    composables.push(function() {
-        it(name, function() {
-            assert(Vector3.comp[name](param2)(param1), expected);
-        });
-    });
-}
+    multi   = require('./multi_test')(Vector3);
 
 function roundedEqual(actual, expected) {
     assert.equal(Math.round(actual), expected);
 }
 
 describe('Vector3', function() {
-    test('add', assert.deepEqual, Vector3(5,7,9), Vector3(1, 2, 3), Vector3(4, 5, 6));
-    test('sub', assert.deepEqual, Vector3(-3,-3,-3), Vector3(1, 2, 3), Vector3(4, 5, 6));
-    test('equals', assert.equal, true, Vector3(2,2,3), Vector3(2,2,3));
-    test('equals', assert.equal, false, Vector3(1,2,3), Vector3(2,2,3));
-    test('multiply', assert.deepEqual, Vector3(4, 10, 18), Vector3(1, 2, 3), Vector3(4,5,6));
-    test('divide', assert.deepEqual, Vector3(2, 0.5, 7), Vector3(8, 2, 7), Vector3(4,4,1));
-    test('magnitude', roundedEqual, 34, Vector3(28, 12, 16));
-    test('dot', assert.equal, 76, Vector3(8, 1, 5), Vector3(4, 4, 8));
-    test('normalize', assert.deepEqual, Vector3(1, 2, 3).normalize(), Vector3(4, 8, 12));
-    test('angle', roundedEqual, 1, Vector3(0, 1, 0), Vector3(4, 4, 2));
-    test('angleDeg', roundedEqual, 48, Vector3(0, 1, 0), Vector3(4, 4, 2));
-    test('distance', assert.equal, 3, Vector3(0, 1, 2), Vector3(3, 1, 2));
-    test('clamp', assert.deepEqual, Vector3(0, 0, 1.5), Vector3(0, 0, 3), 1.5);
-    test('clamp', assert.deepEqual, Vector3(0, 0, 1.5), Vector3(0, 0, 1), 1.5);
-    test('limit', assert.deepEqual, Vector3(0, 0, 1.5), Vector3(0, 0, 3), 1.5);
-    test('limit', assert.deepEqual, Vector3(0, 0,   1), Vector3(0, 0, 1), 1.5);
-    test('toArray', assert.deepEqual, [2, 3, 4], Vector3(2, 3, 4));
-    test('toObject', assert.deepEqual, {x: 1, y: 7, z: 9}, Vector3(1, 7, 9));
+    multi.test('add', assert.deepEqual, Vector3(5,7,9), Vector3(1, 2, 3), Vector3(4, 5, 6));
+    multi.test('sub', assert.deepEqual, Vector3(-3,-3,-3), Vector3(1, 2, 3), Vector3(4, 5, 6));
+    multi.test('equals', assert.equal, true, Vector3(2,2,3), Vector3(2,2,3));
+    multi.test('equals', assert.equal, false, Vector3(1,2,3), Vector3(2,2,3));
+    multi.test('multiply', assert.deepEqual, Vector3(4, 10, 18), Vector3(1, 2, 3), Vector3(4,5,6));
+    multi.test('divide', assert.deepEqual, Vector3(2, 0.5, 7), Vector3(8, 2, 7), Vector3(4,4,1));
+    multi.test('magnitude', roundedEqual, 34, Vector3(28, 12, 16));
+    multi.test('dot', assert.equal, 76, Vector3(8, 1, 5), Vector3(4, 4, 8));
+    multi.test('normalize', assert.deepEqual, Vector3(1, 2, 3).normalize(), Vector3(4, 8, 12));
+    multi.test('angle', roundedEqual, 1, Vector3(0, 1, 0), Vector3(4, 4, 2));
+    multi.test('angleDeg', roundedEqual, 48, Vector3(0, 1, 0), Vector3(4, 4, 2));
+    multi.test('distance', assert.equal, 3, Vector3(0, 1, 2), Vector3(3, 1, 2));
+    multi.test('clamp', assert.deepEqual, Vector3(0, 0, 1.5), Vector3(0, 0, 3), 1.5);
+    multi.test('clamp', assert.deepEqual, Vector3(0, 0, 1.5), Vector3(0, 0, 1), 1.5);
+    multi.test('limit', assert.deepEqual, Vector3(0, 0, 1.5), Vector3(0, 0, 3), 1.5);
+    multi.test('limit', assert.deepEqual, Vector3(0, 0,   1), Vector3(0, 0, 1), 1.5);
+    multi.test('toArray', assert.deepEqual, [2, 3, 4], Vector3(2, 3, 4));
+    multi.test('toObject', assert.deepEqual, {x: 1, y: 7, z: 9}, Vector3(1, 7, 9));
 
     describe('instance functions', function() {
-        instances.forEach(function(it) {
-            it.call();
-        });
+        multi.run(multi.instances);
 
         it('constructor', function() {
             assert(Vector3(2, 2, 1).equals(new Vector3(2, 2, 1)));
@@ -58,9 +36,8 @@ describe('Vector3', function() {
     });
 
     describe('standalone functions', function() {
-        standalones.forEach(function(it) {
-            it.call();
-        });
+        multi.run(multi.standalones);
+
         it('fromArray', function() {
             assert(Vector3(3, 4, 7).equals(Vector3.fromArray([3, 4, 7])));
         });
@@ -80,9 +57,7 @@ describe('Vector3', function() {
     });
 
     describe('composable instance functions', function() {
-        composables.forEach(function(it) {
-            it.call();
-        });
+        multi.run(multi.composables);
 
         var vec = [
             Vector3(1, 1, 1),
