@@ -1,3 +1,5 @@
+var compose = require('./compose');
+
 function Vector3D(x, y, z) {
     if (this instanceof Vector3D) {
         this.x = x;
@@ -65,18 +67,7 @@ Vector3D.toObject = function(self) {
     };
 };
 
-var keys = Object.keys(Vector3D);
-Vector3D.comp = {};
-keys.forEach(function(key) {
-    Vector3D.prototype[key] = function(other) {
-        return Vector3D[key](this, other);
-    };
-    Vector3D.comp[key] = function(other) {
-        return function(self) {
-            return self[key](other);
-        };
-    };
-});
+compose(Vector3D);
 
 Vector3D.fromArray = function(arr) {
     return new Vector3D(arr[0], arr[1], arr[2]);

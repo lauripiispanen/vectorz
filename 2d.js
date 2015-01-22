@@ -1,3 +1,5 @@
+var compose = require('./compose');
+
 function Vector2D(x, y) {
     if (this instanceof Vector2D) {
         this.x = x;
@@ -7,60 +9,63 @@ function Vector2D(x, y) {
     }
 };
 
-Vector2D.prototype.add = function(other) {
-    return new Vector2D(this.x + other.x, this.y + other.y);
+Vector2D.add = function(self, other) {
+    return new Vector2D(self.x + other.x, self.y + other.y);
 };
-Vector2D.prototype.sub = function(other) {
-    return new Vector2D(this.x - other.x, this.y - other.y);
+Vector2D.sub = function(self, other) {
+    return new Vector2D(self.x - other.x, self.y - other.y);
 };
-Vector2D.prototype.multiply = function(other) {
-    return new Vector2D(this.x * other.x, this.y * other.y);
+Vector2D.multiply = function(self, other) {
+    return new Vector2D(self.x * other.x, self.y * other.y);
 };
-Vector2D.prototype.divide = function(other) {
-    return new Vector2D(this.x / other.x, this.y / other.y);
+Vector2D.divide = function(self, other) {
+    return new Vector2D(self.x / other.x, self.y / other.y);
 };
-Vector2D.prototype.magnitude = function() {
-    return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
+Vector2D.magnitude = function(self) {
+    return Math.sqrt(Math.pow(self.x, 2) + Math.pow(self.y, 2));
 };
-Vector2D.prototype.normalize = function() {
-    return this.clamp(1);
+Vector2D.normalize = function(self) {
+    return self.clamp(1);
 };
-Vector2D.prototype.dot = function(other) {
-    return this.x * other.x + this.y * other.y;
+Vector2D.dot = function(self, other) {
+    return self.x * other.x + self.y * other.y;
 };
-Vector2D.prototype.angle = function(other) {
-    return Math.acos(this.normalize().dot(other.normalize()));
+Vector2D.angle = function(self, other) {
+    return Math.acos(self.normalize().dot(other.normalize()));
 };
-Vector2D.prototype.angleDeg = function(other) {
-    return this.angle(other) * (180 / Math.PI);
+Vector2D.angleDeg = function(self, other) {
+    return self.angle(other) * (180 / Math.PI);
 };
-Vector2D.prototype.distance = function(other) {
-    return this.sub(other).magnitude();
+Vector2D.distance = function(self, other) {
+    return self.sub(other).magnitude();
 };
-Vector2D.prototype.clamp = function(magnitude) {
-    var ratio = (this.magnitude() / magnitude);
-    return new Vector2D(this.x / ratio, this.y / ratio);
+Vector2D.clamp = function(self, magnitude) {
+    var ratio = (self.magnitude() / magnitude);
+    return new Vector2D(self.x / ratio, self.y / ratio);
 };
-Vector2D.prototype.limit = function(magnitude) {
-    if (magnitude < this.magnitude()) {
-        return this.clamp(magnitude);
+Vector2D.limit = function(self, magnitude) {
+    if (magnitude < self.magnitude()) {
+        return self.clamp(magnitude);
     } else {
-        return this;
+        return self;
     }
 };
-Vector2D.prototype.toArray = function() {
-    return [this.x, this.y];
+Vector2D.toArray = function(self) {
+    return [self.x, self.y];
 };
-Vector2D.prototype.toObject = function() {
+Vector2D.toObject = function(self) {
     return {
-        x: this.x,
-        y: this.y
+        x: self.x,
+        y: self.y
     };
 };
 
-Vector2D.prototype.equals = function(other) {
-    return this.x === other.x && this.y === other.y;
+Vector2D.equals = function(self, other) {
+    return self.x === other.x && self.y === other.y;
 };
+
+compose(Vector2D);
+
 Vector2D.fromArray = function(arr) {
     return new Vector2D(arr[0], arr[1]);
 };
