@@ -1,12 +1,21 @@
 {
   "name": "vectorz",
   "version": "1.0.0",
-  "description": "",
+  "description": "a 2d/3d vector library",
   "main": "index.js",
   "scripts": {
     "test": "node_modules/mocha/bin/mocha"
   },
-  "author": "",
+  "author": "Lauri Piispanen",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/lauripiispanen/vectorz.git"
+  },
+  "keywords": [
+    "vector",
+    "3d",
+    "2d"
+  ],
   "license": "ISC",
   "devDependencies": {
     "mocha": "^2.1.0"
