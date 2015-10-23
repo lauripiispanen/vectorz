@@ -1,6 +1,6 @@
 {
   "name": "vectorz",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "a 2d/3d vector library",
   "main": "index.js",
   "scripts": {

@@ -24,6 +24,9 @@ Vector2D.divide = function(self, other) {
 Vector2D.magnitude = function(self) {
     return Math.sqrt(Math.pow(self.x, 2) + Math.pow(self.y, 2));
 };
+Vector2D.scale = function(self, factor) {
+    return self.multiply(Vector2D(factor, factor));
+};
 Vector2D.normalize = function(self) {
     return self.clamp(1);
 };

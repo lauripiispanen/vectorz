@@ -25,6 +25,9 @@ Vector3D.divide = function(self, other) {
 Vector3D.magnitude = function(self) {
     return Math.sqrt(Math.pow(self.x, 2) + Math.pow(self.y, 2) + Math.pow(self.z, 2));
 };
+Vector3D.scale = function(self, factor) {
+    return self.multiply(Vector3D(factor, factor, factor));
+};
 Vector3D.normalize = function(self) {
     return self.clamp(1);
 };

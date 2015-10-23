@@ -56,6 +56,10 @@ Returns a new vector by dividing two vectors' corresponding components.
 
 Returns the length of a vector.
 
+**scale(scalar)**
+
+Multiplies vector a vector by a scalar.
+
 **normalize()**
 
 Returns a vector with the same direction, but length of 1. Same as `.clamp(1)`.

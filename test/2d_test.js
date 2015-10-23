@@ -14,6 +14,7 @@ describe('Vector2', function() {
     multi.test('multiply', assert.deepEqual, Vector2(4, 10), Vector2(1, 2), Vector2(4,5));
     multi.test('divide', assert.deepEqual, Vector2(2, 0.5), Vector2(8, 2), Vector2(4,4));
     multi.test('magnitude', assert.equal, 10, Vector2(6, 8));
+    multi.test('scale', assert.deepEqual, Vector2(45, -3), Vector2(15, -1), 3)
     multi.test('dot', assert.equal, 36, Vector2(8, 1), Vector2(4, 4));
     multi.test('normalize', assert.deepEqual, Vector2(1, 2).normalize(), Vector2(4, 8));
     multi.test('angle', roundedEqual, 1, Vector2(0, 1), Vector2(4, 4));

@@ -14,6 +14,7 @@ describe('Vector3', function() {
     multi.test('multiply', assert.deepEqual, Vector3(4, 10, 18), Vector3(1, 2, 3), Vector3(4,5,6));
     multi.test('divide', assert.deepEqual, Vector3(2, 0.5, 7), Vector3(8, 2, 7), Vector3(4,4,1));
     multi.test('magnitude', roundedEqual, 34, Vector3(28, 12, 16));
+    multi.test('scale', assert.deepEqual, Vector3(45, -3, 12), Vector3(15, -1, 4), 3);
     multi.test('dot', assert.equal, 76, Vector3(8, 1, 5), Vector3(4, 4, 8));
     multi.test('normalize', assert.deepEqual, Vector3(1, 2, 3).normalize(), Vector3(4, 8, 12));
     multi.test('angle', roundedEqual, 1, Vector3(0, 1, 0), Vector3(4, 4, 2));
